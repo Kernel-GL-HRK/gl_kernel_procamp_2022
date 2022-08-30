@@ -30,6 +30,13 @@ passwd <password>
 chown user:user /home/user
 ```
 
+## Building Kernel module
+
+To build kernel module execute:
+```sh
+make
+```
+
 ## Running
 
 ### Remote connection to QEMU
@@ -46,3 +53,20 @@ For secure copying files to QEMU host use the following command:
 # scp -P [remote port] [local file] [user]@[host]:[remote path]
 scp -P 10022 test-mod.ko user@localhost:~/
 ```
+
+### Executing Kernel module
+
+1. Run QEMU (see [Build of buildroot](#build-of-buildroot) - 6)
+2. Copy module file to QEMU host ([Transferring files to QEMU](#transferring-files-to-qemu))
+3. Load Kernel module:
+    ```sh
+    modprobe test-module.ko
+    ```
+4. Unload Kernel module:
+    ```sh
+    rmmod test-module
+    ```
+
+    > **TODO**: There is an error executing `modprobe` under the restricted user account.
+
+    > **WORKAROUND**: for loading Kernel module run `insmod <module-name.ko>` under root account. 
